@@ -4,7 +4,7 @@
 import enum
 
 class Genre(enum.Enum):
-    Pops = 0,
+    Pop = 0,
     Anime = 1
     Vocaloid = 2,
     Variety = 3,
