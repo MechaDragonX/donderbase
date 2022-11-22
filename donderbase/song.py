@@ -31,7 +31,7 @@ class Song:
     __game_list = []
     # Charts can change over time, so each entry in the list corresponds to the game in the same position of __game_list.
     # Each entry contains another array where each element corresponds to each difficulty in the order,
-    # Easy, Normal, Hard, Oni/Extreme, Ura Oni, Extreme
+    # Easy, Normal, Hard, Oni/Extreme, Ura Oni/Extreme
     # A 0 denotes that the difficulty does not exist for that song
     # Example:
     # __game_list: [
