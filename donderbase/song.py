@@ -25,7 +25,7 @@ class Song:
     # Genre classification can change over time, so each entry in the list corresponds to the game in the same position of __game_list.
     # Old genre names are listed under their current genre names were applicable. For example: J-Pop to Pops
     # Before the additiona of a Vocaloid genre, some Vocaloid were in Variety. I'll decided what to do about that later
-    __genre = []
+    __genre_list = []
     # Example: Listed in string form for now with games released in English using English titles
     # and Japanese only releases with romanized titles
     __game_list = []
@@ -45,3 +45,10 @@ class Song:
         # [ 3, 4, 5, 7, 8 ]
     # ]
     __difficulties = []
+
+    def __init__(self, title, subtitle, genre_list, game_list, difficulties):
+        self.__title = title
+        self.__subtitle = subtitle
+        self.__genre_list = genre_list
+        self.__game_list = game_list
+        self.__difficulties = difficulties
