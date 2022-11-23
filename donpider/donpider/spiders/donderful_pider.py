@@ -3,7 +3,7 @@ import scrapy
 class DonderfulPider(scrapy.Spider):
     name = 'donderful'
     start_urls = [
-        f'file:////{__file__.removesuffix("donpider/donpider/spiders/donderful_pider.py")}donderbase/data/donderful.html'
+        f'file:////{__file__.removesuffix("donpider/donpider/spiders/donderful_pider.py")}data/donderful.html'
     ]
 
     def extractTitles(self, song):
