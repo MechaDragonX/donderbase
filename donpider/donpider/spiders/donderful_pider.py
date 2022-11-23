@@ -109,8 +109,8 @@ class DonderfulPider(scrapy.Spider):
                 subtitle = subtitle.encode('utf-8').decode('unicode-escape')
 
             yield {
-                'classic_title': titles,
-                'classic_subtitle': subtitles
+                'classical_title': titles,
+                'classical_subtitle': subtitles
             }
 
         for song in response.css('li.game'):
