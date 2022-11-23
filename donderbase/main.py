@@ -6,7 +6,7 @@ def main():
     donderful_import()
 
 def donderful_import() -> list:
-    filename = f'{__file__.removesuffix("main.py")}data/donderful.json'
+    filename = f'{__file__.removesuffix("donderbase/main.py")}data/donderful.json'
     lines = []
     with open(filename, 'r') as file:
         lines = file.readlines()
