@@ -3,7 +3,7 @@ import scrapy
 class DonderfulPider(scrapy.Spider):
     name = 'donderful'
     start_urls = [
-        'https://dondafulfestival-20th.taiko-ch.net/en/music/songlist.php'
+        f'file:////{__file__.removesuffix("donpider/donpider/spiders/donderful_pider.py")}donderbase/data/donderful.html'
     ]
 
     def extractTitles(self, song):
