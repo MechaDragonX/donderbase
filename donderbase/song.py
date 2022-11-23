@@ -46,7 +46,13 @@ class Song:
     # ]
     __difficulties = []
 
-    def __init__(self, title, subtitle, genre_list, game_list, difficulties):
+    def __init__(self, title: str, subtitle: str, genre_list: list, game_list: list):
+        self.__title = title
+        self.__subtitle = subtitle
+        self.__genre_list = genre_list
+        self.__game_list = game_list
+
+    def __init__(self, title: str, subtitle: str, genre_list: list, game_list: list, difficulties: list):
         self.__title = title
         self.__subtitle = subtitle
         self.__genre_list = genre_list
