@@ -6,23 +6,29 @@ class DonderfulPider(scrapy.Spider):
         'https://dondafulfestival-20th.taiko-ch.net/en/music/songlist.php'
     ]
 
-
-    def parse(self, response):
-        for song in response.css('li.pops'):
-            titles = song.css('dt.song::text').getall()
-            for title in titles:
-                title = title.encode('utf-8').decode('unicode-escape')
-
-            subtitles = list(map(
+    def extractTitles(self, song):
+        titles = song.css('dt.song::text').getall()
+        for title in titles:
+            title = title.encode('utf-8').decode('unicode-escape')
+        return titles
+    def extractSubtitles(self, song):
+        subtitles = list(map(
                 lambda x: x.replace('<dd>', ''), 
                 song.css('dd').getall()
             ))
-            subtitles = list(map(
+        subtitles = list(map(
                 lambda x: x.replace('</dd>', ''), 
                 subtitles
             ))
-            for subtitle in subtitles:
-                subtitle = subtitle.encode('utf-8').decode('unicode-escape')
+        for subtitle in subtitles:
+            subtitle = subtitle.encode('utf-8').decode('unicode-escape')
+        return subtitles
+
+    def parse(self, response):
+        for song in response.css('li.pops'):
+            titles = self.extractTitles(song)
+
+            subtitles = self.extractSubtitles(song)
 
             yield {
                 'pop_title': titles,
@@ -30,20 +36,9 @@ class DonderfulPider(scrapy.Spider):
             }
 
         for song in response.css('li.anime'):
-            titles = song.css('dt.song::text').getall()
-            for title in titles:
-                title = title.encode('utf-8').decode('unicode-escape')
+            titles = self.extractTitles(song)
 
-            subtitles = list(map(
-                lambda x: x.replace('<dd>', ''), 
-                song.css('dd').getall()
-            ))
-            subtitles = list(map(
-                lambda x: x.replace('</dd>', ''), 
-                subtitles
-            ))
-            for subtitle in subtitles:
-                subtitle = subtitle.encode('utf-8').decode('unicode-escape')
+            subtitles = self.extractSubtitles(song)
 
             yield {
                 'anime_title': titles,
@@ -51,20 +46,9 @@ class DonderfulPider(scrapy.Spider):
             }
 
         for song in response.css('li.vocaloid'):
-            titles = song.css('dt.song::text').getall()
-            for title in titles:
-                title = title.encode('utf-8').decode('unicode-escape')
+            titles = self.extractTitles(song)
 
-            subtitles = list(map(
-                lambda x: x.replace('<dd>', ''), 
-                song.css('dd').getall()
-            ))
-            subtitles = list(map(
-                lambda x: x.replace('</dd>', ''), 
-                subtitles
-            ))
-            for subtitle in subtitles:
-                subtitle = subtitle.encode('utf-8').decode('unicode-escape')
+            subtitles = self.extractSubtitles(song)
 
             yield {
                 'vocaloid_title': titles,
@@ -72,20 +56,9 @@ class DonderfulPider(scrapy.Spider):
             }
 
         for song in response.css('li.variety'):
-            titles = song.css('dt.song::text').getall()
-            for title in titles:
-                title = title.encode('utf-8').decode('unicode-escape')
+            titles = self.extractTitles(song)
 
-            subtitles = list(map(
-                lambda x: x.replace('<dd>', ''), 
-                song.css('dd').getall()
-            ))
-            subtitles = list(map(
-                lambda x: x.replace('</dd>', ''), 
-                subtitles
-            ))
-            for subtitle in subtitles:
-                subtitle = subtitle.encode('utf-8').decode('unicode-escape')
+            subtitles = self.extractSubtitles(song)
 
             yield {
                 'variety_title': titles,
@@ -93,20 +66,9 @@ class DonderfulPider(scrapy.Spider):
             }
         
         for song in response.css('li.classic'):
-            titles = song.css('dt.song::text').getall()
-            for title in titles:
-                title = title.encode('utf-8').decode('unicode-escape')
+            titles = self.extractTitles(song)
 
-            subtitles = list(map(
-                lambda x: x.replace('<dd>', ''), 
-                song.css('dd').getall()
-            ))
-            subtitles = list(map(
-                lambda x: x.replace('</dd>', ''), 
-                subtitles
-            ))
-            for subtitle in subtitles:
-                subtitle = subtitle.encode('utf-8').decode('unicode-escape')
+            subtitles = self.extractSubtitles(song)
 
             yield {
                 'classical_title': titles,
@@ -114,20 +76,9 @@ class DonderfulPider(scrapy.Spider):
             }
 
         for song in response.css('li.game'):
-            titles = song.css('dt.song::text').getall()
-            for title in titles:
-                title = title.encode('utf-8').decode('unicode-escape')
+            titles = self.extractTitles(song)
 
-            subtitles = list(map(
-                lambda x: x.replace('<dd>', ''), 
-                song.css('dd').getall()
-            ))
-            subtitles = list(map(
-                lambda x: x.replace('</dd>', ''), 
-                subtitles
-            ))
-            for subtitle in subtitles:
-                subtitle = subtitle.encode('utf-8').decode('unicode-escape')
+            subtitles = self.extractSubtitles(song)
 
             yield {
                 'game_title': titles,
@@ -135,20 +86,9 @@ class DonderfulPider(scrapy.Spider):
             }
 
         for song in response.css('li.namco'):
-            titles = song.css('dt.song::text').getall()
-            for title in titles:
-                title = title.encode('utf-8').decode('unicode-escape')
+            titles = self.extractTitles(song)
 
-            subtitles = list(map(
-                lambda x: x.replace('<dd>', ''), 
-                song.css('dd').getall()
-            ))
-            subtitles = list(map(
-                lambda x: x.replace('</dd>', ''), 
-                subtitles
-            ))
-            for subtitle in subtitles:
-                subtitle = subtitle.encode('utf-8').decode('unicode-escape')
+            subtitles = self.extractSubtitles(song)
 
             yield {
                 'namco_title': titles,
