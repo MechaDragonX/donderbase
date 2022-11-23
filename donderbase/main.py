@@ -1,6 +1,5 @@
 import json
 import re
-import os
 from song import Genre, Song
 
 def main():
