@@ -2,6 +2,8 @@ import json
 import re
 from song import Genre, Song
 
+source_pattern = re.compile(r"(?<!\")[^\"]+(?!\")")
+
 def main():
     donderful_wrangle()
 
@@ -39,8 +41,17 @@ def donderful_wrangle() -> list:
             case 'namco':
                 genre_list.append(Genre.NamcoOriginal)
         title = current[f'{genre}_title']
+        
         subtitle = current[f'{genre}_subtitle']
-        songs.append(Song(title, subtitle, genre_list, game_list, None))
+        artist = ''
+        source = ''
+        if not "From" in subtitle:
+            artist = subtitle
+            subtitle = ''
+        else:
+            source = re.findall(source_pattern, subtitle)[1]
+
+        songs.append(Song(title, subtitle, artist, source, genre_list, game_list, None))
 
         title = ''
         subtitle = ''
