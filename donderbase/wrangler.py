@@ -3,9 +3,9 @@ import re
 from song import Genre, Song
 
 def main():
-    donderful_import()
+    donderful_wrangle()
 
-def donderful_import() -> list:
+def donderful_wrangle() -> list:
     filename = f'{__file__.removesuffix("donderbase/main.py")}data/donderful.json'
     lines = []
     with open(filename, 'r') as file:
