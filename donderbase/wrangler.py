@@ -5,6 +5,7 @@ from song import Genre, Song
 def main():
     donderful_wrangle()
 
+
 def donderful_wrangle() -> list:
     filename = f'{__file__.removesuffix("donderbase/wrangler.py")}data/donderful.json'
     lines = []
@@ -46,6 +47,7 @@ def donderful_wrangle() -> list:
         genre_list = []
 
     return songs
+
 
 if __name__ == '__main__':
     main();
