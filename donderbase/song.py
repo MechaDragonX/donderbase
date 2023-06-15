@@ -14,6 +14,79 @@ class Genre(Enum):
     GameMusic = 5,
     NamcoOriginal = 6
 
+    # resultDesc = Should the result be an enum?
+    # If true, return an enum
+    # else, return the oppoiste type (int if given sting, and vice versa)
+    @classmethod
+    def convert(input, resultEnum: bool = False):
+        if isinstance(input, int):
+            if bool:
+                match input:
+                    case 0:
+                        return Genre.Pop
+                    case 1:
+                        return Genre.Anime
+                    case 2:
+                        return Genre.Vocaloid
+                    case 3:
+                        return Genre.Variety
+                    case 4:
+                        return Genre.Classical
+                    case 5:
+                        return Genre.GameMusic
+                    case 6:
+                        return Genre.NamcoOriginal
+
+            else:
+                match input:
+                    case 0:
+                        return 'Pop'
+                    case 1:
+                        return 'Anime'
+                    case 2:
+                        return 'Vocaloid'
+                    case 3:
+                        return 'Variety'
+                    case 4:
+                        return 'Classical'
+                    case 5:
+                        return 'GameMusic'
+                    case 6:
+                        return 'NamcoOriginal'
+        elif isinstance(input, str):
+            if bool:
+                match input:
+                    case 'Pop':
+                        return Genre.Pop
+                    case 'Anime':
+                        return Genre.Anime
+                    case 'Vocaloid':
+                        return Genre.Vocaloid
+                    case 'Variety':
+                        return Genre.Variety
+                    case 'Classical':
+                        return Genre.Classical
+                    case 'GameMusic':
+                        return Genre.GameMusic
+                    case 'NamcoOriginal':
+                        return Genre.NamcoOriginal
+            else:
+                match input:
+                    case 'Pop':
+                        return 0
+                    case 'Anime':
+                        return 1
+                    case 'Vocaloid':
+                        return 2
+                    case 'Variety':
+                        return 3
+                    case 'Classical':
+                        return 4
+                    case 'GameMusic':
+                        return 5
+                    case 'NamcoOriginal':
+                        return 6
+
 
 class Song:
     # Titles are in English if official Taiko translations exist. If not, romanized titles are used for consistency
@@ -75,7 +148,7 @@ class Song:
             'subtitle': self.__subtitle,
             'artist': self.__artist,
             'source': self.__source,
-            'genre_list': [g.value for g in self.__genre_list],
+            'genre_list': [item.name for item in self.__genre_list],
             'game_list': self.__game_list,
             'difficulties': self.__difficulties
         }
