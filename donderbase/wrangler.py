@@ -1,25 +1,43 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import json
 import re
 from song import Genre, Song
 
 class Wrangler:
-    source_pattern = re.compile(r"(?<!\")[^\"]+(?!\")")
-
-    def donderful_wrangle() -> list:
-        filename = f'{__file__.removesuffix("donderbase/wrangler.py")}data/donderful.json'
+    def file_import(title: str) -> list:
+        filename = f'{__file__.removesuffix("donderbase/wrangler.py")}data/{title}.json'
         lines = []
         with open(filename, 'r') as file:
             lines = file.readlines()
         lines.pop(0)
         lines.pop()
 
+        return lines
+
+
+    def serialize_list(songs: list) -> list:
+        json_list = []
+        current = None
+        for song in songs:
+            json_list.append(json.dumps(song.to_dict()))
+
+        return json_list
+
+
+    def donderful_wrangle(raw_input: list) -> list:
+        source_pattern = re.compile(r"(?<!\")[^\"]+(?!\")")
+
         songs = []
         title = ''
         subtitle = ''
+        artist = ''
+        source = ''
         genre_list = []
         game_list = [ 'Taiko no Tatusjin: Rhythm Festival' ]
 
-        for line in lines:
+        for line in raw_input:
             current = json.loads(line.removesuffix(',\n'))
             genre = re.search("^[^_]*", list(current.keys())[0]).group()
             match genre:
@@ -40,18 +58,18 @@ class Wrangler:
             title = current[f'{genre}_title']
             
             subtitle = current[f'{genre}_subtitle']
-            artist = ''
-            source = ''
             if not "From" in subtitle:
                 artist = subtitle
                 subtitle = ''
             else:
-                source = re.findall(Wrangler.source_pattern, subtitle)[1]
+                source = re.findall(source_pattern, subtitle)[1]
 
             songs.append(Song(title, subtitle, artist, source, genre_list, game_list, None))
 
             title = ''
             subtitle = ''
+            artist = ''
+            source = ''
             genre_list = []
-            
-        return songs
+
+        return Wrangler.serialize_list(songs)

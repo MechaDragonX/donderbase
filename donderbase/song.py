@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import enum
+from enum import Enum
+from json import JSONEncoder
+import json
 
-class Genre(enum.Enum):
+class Genre(Enum):
     Pop = 0,
     Anime = 1
     Vocaloid = 2,
@@ -11,6 +13,9 @@ class Genre(enum.Enum):
     Classical = 4,
     GameMusic = 5,
     NamcoOriginal = 6
+
+    # def __repr__(self):
+    #     return f'{self.name}'
 
 
 class Song:
@@ -34,6 +39,12 @@ class Song:
 
     # Example: Listed in string form for now with games released in English using English titles
     # and Japanese only releases with romanized titles
+    # Example:
+    # __game_list: [
+        # "Taiko no Tasujin: Drum 'n' Fun!"",
+        # "Taiko no Tatsujin: Drum Session!"
+        # "Taiko no Tatsujin: Rhythm Festival"
+    # ]
     __game_list = []
 
     # Charts can change over time, so each entry in the list corresponds to the game in the same position of __game_list.
@@ -41,11 +52,6 @@ class Song:
     # Easy, Normal, Hard, Oni/Extreme, Ura Oni/Extreme
     # A 0 denotes that the difficulty does not exist for that song
     # Example:
-    # __game_list: [
-        # "Taiko no Tasujin: Drum 'n' Fun!"",
-        # "Taiko no Tatsujin: Drum Session!"
-        # "Taiko no Tatsujin: Rhythm Festival"
-    # ]
     # __difficulties = [
         # [ 3, 3, 4, 7, 0 ],
         # [ 3, 4, 5, 6, 8 ],
@@ -64,3 +70,15 @@ class Song:
 
         if difficulties != None:
             self.__difficulties = difficulties
+
+
+    def to_dict(self):
+        return {
+            'title': self.__title,
+            'subtitle': self.__subtitle,
+            'artist': self.__artist,
+            'source': self.__source,
+            'genre_list': [g.value for g in self.__genre_list],
+            'game_list': self.__game_list,
+            'difficulties': self.__difficulties
+        }
