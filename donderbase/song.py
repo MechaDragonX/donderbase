@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from enum import Enum
-from json import JSONEncoder
-import json
 
 class Genre(Enum):
     Pop = 0,
