@@ -140,7 +140,7 @@ class Song:
             self.__difficulties = difficulties
 
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return {
             'title': self.__title,
             'subtitle': self.__subtitle,
