@@ -60,7 +60,6 @@ class Wrangler:
             subtitle = current[f'{genre}_subtitle']
             if not "From" in subtitle:
                 artist = subtitle
-                subtitle = ''
             else:
                 source = re.findall(source_pattern, subtitle)[1]
 
