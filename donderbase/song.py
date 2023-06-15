@@ -14,9 +14,6 @@ class Genre(Enum):
     GameMusic = 5,
     NamcoOriginal = 6
 
-    # def __repr__(self):
-    #     return f'{self.name}'
-
 
 class Song:
     # Titles are in English if official Taiko translations exist. If not, romanized titles are used for consistency
