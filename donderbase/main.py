@@ -14,6 +14,39 @@ commands = {
 }
 
 
+def init() -> None:
+    print('Welcome to Donderbase! Please wait as all the data is loaded into the database!')
+
+    search_client = SearchClient()
+    search_client.add(Wrangler.donderful_wrangle(Wrangler.file_import('donderful')))
+
+    print('Import successfull!')
+
+
+def input_loop(search_client: SearchClient) -> None:
+    input_str = ''
+    params = []
+    query = None
+    while(True):
+        while(True):
+            input_str = input('> ')
+            params = input_str.split(' ')
+            if is_command(params[0]):
+                break
+
+        match params[0]:
+            case 'help':
+                print('UNIMPLEMENTED')
+            case 'search':
+                query = handle_search(input_str)
+                if query != None:
+                    search(search_client, query)
+            case 'exit':
+                exit()
+        
+        print()
+
+
 def is_command(input: str) -> bool:
     for key in commands:
         if input == key:
@@ -40,33 +73,7 @@ def exit() -> None:
 
 # Main I suppose
 # Welcome user and start import
-print('Welcome to Donderbase! Please wait as all the data is loaded into the database!')
-
-search_client = SearchClient()
-search_client.add(Wrangler.donderful_wrangle(Wrangler.file_import('donderful')))
-
-print('Import successfull!')
-
+search_client = init()
 
 # User input loop
-input_str = ''
-params = []
-query = None
-while(True):
-    while(True):
-        input_str = input('> ')
-        params = input_str.split(' ')
-        if is_command(params[0]):
-            break
-
-    match params[0]:
-        case 'help':
-            print('UNIMPLEMENTED')
-        case 'search':
-            query = handle_search(input_str)
-            if query != None:
-                search(search_client, query)
-        case 'exit':
-            exit()
-    
-    print()
+input_loop(search_client)
