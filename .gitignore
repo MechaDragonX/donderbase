@@ -154,6 +154,3 @@ cython_debug/
 
 # Data folder
 data/
-
-# Dockerfile
-donderbase/Dockerfile
