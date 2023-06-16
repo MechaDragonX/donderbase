@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import json
 import sys
-
-from search import Search
+from search import SearchClient
 from wrangler import Wrangler
 
 
@@ -28,9 +28,9 @@ def handle_search(input_str: str):
     return input_str[7:]
 
 
-def search(search: Search, input: str) -> list:
-    # return search.search(input)
-    print(f'検索 {input}')
+def search(search_client: SearchClient, input: str) -> list:
+    result = search_client.search(input)
+    print(json.dumps(result, indent=4))
 
 
 def exit() -> None:
@@ -38,15 +38,17 @@ def exit() -> None:
     sys.exit()
 
 
+# Main I suppose
+# Welcome user and start import
 print('Welcome to Donderbase! Please wait as all the data is loaded into the database!')
 
-# search = Search()
-# search.add(Wrangler.donderful_wrangle(Wrangler.file_import('donderful')))
-Wrangler.donderful_wrangle(Wrangler.file_import('donderful'))
+search_client = SearchClient()
+search_client.add(Wrangler.donderful_wrangle(Wrangler.file_import('donderful')))
 
 print('Import successfull!')
 
 
+# User input loop
 input_str = ''
 params = []
 query = None
@@ -63,7 +65,7 @@ while(True):
         case 'search':
             query = handle_search(input_str)
             if query != None:
-                search(search, query)
+                search(search_client, query)
         case 'exit':
             exit()
     
