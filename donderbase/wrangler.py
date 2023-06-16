@@ -19,7 +19,6 @@ class Wrangler:
 
     def serialize_list(songs: list) -> list:
         json_list = []
-        current = None
         for song in songs:
             json_list.append(json.dumps(song.to_dict()))
 
