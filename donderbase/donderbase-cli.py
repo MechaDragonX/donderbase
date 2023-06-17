@@ -7,7 +7,7 @@ from wrangler import Wrangler
 
 
 def init() -> SearchClient:
-    print('Welcome to Donderbase! Please wait as all the data is loaded into the database!')
+    print('Welcome to Donderbase! Please wait while all the data is loaded into the database!')
 
     search_client = SearchClient()
     search_client.add(Wrangler.donderful_wrangle(Wrangler.file_import('donderful')))
