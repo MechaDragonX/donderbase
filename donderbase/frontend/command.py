@@ -9,9 +9,21 @@ from search import SearchClient
 class Command:
     __commands = {
         'help': '',
-        'search': 'Usage: "search <query>',
+        'search': 'Usage: "search <field> <query>',
         'exit': 'Exit the program'
     }
+
+    # Valid params to search
+    # Example usage:
+    # search source Persona 5
+    __search_params = [
+        'title',
+        'subtitle',
+        'artist',
+        'source',
+        'genre',
+        'game'
+    ]
 
 
     def input_loop(search_client: SearchClient) -> None:
@@ -46,10 +58,13 @@ class Command:
 
     def __handle_search(input_str: str):
         params = input_str.split(' ')
-        if len(params) == 1 or params[0] != 'search':
+
+        if (len(params) == 1 or params[0]) != 'search':
+            return None
+        if not (params[1] in Command.__search_params):
             return None
         
-        return input_str[7:]
+        return f'{params[1]}:{params[2]}'
 
 
     def __search(search_client: SearchClient, input: str) -> list:
