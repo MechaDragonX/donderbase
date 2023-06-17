@@ -33,7 +33,7 @@ class Command:
                     if query != None:
                         Command.__search(search_client, query)
                 case 'exit':
-                    exit()
+                    Command.__exit()
             
             print()
 
