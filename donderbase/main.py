@@ -14,7 +14,7 @@ commands = {
 }
 
 
-def init() -> None:
+def init() -> SearchClient:
     print('Welcome to Donderbase! Please wait as all the data is loaded into the database!')
 
     search_client = SearchClient()
