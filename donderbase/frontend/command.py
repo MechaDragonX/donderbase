@@ -8,10 +8,10 @@ from search import SearchClient
 from wrangler import Wrangler
 
 class Command:
-    # Valid params to search
+    # Valid fields to search
     # Example usage:
     # search source Persona 5
-    __search_params = [
+    __fields = [
         'title',
         'subtitle',
         'artist',
@@ -30,6 +30,7 @@ class Command:
         parser.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS, help='Show this help message and exit')
         parser.add_argument('-u','--upload', type=str, metavar=('<path>'), help='Upload a document to the Solr server')
         parser.add_argument('-s','--search', type=str, nargs=2, metavar=('<field>', '<value>'), help='Search for something in the Solr server')
+        parser.add_argument('-sh', '--search-help', action='store_true', help='List the fields that you can search')
         
         args = parser.parse_args()
 
@@ -43,7 +44,7 @@ class Command:
         return search_client
 
 
-    def is_field(field: str):
+    def is_field(field: str) -> bool:
         if not (field in Command.__search_params):
             print('The field you specified does not exist!')
             return False
@@ -58,3 +59,9 @@ class Command:
             print('No results found!')
         else:
             print(json.dumps(result, indent=4))
+
+
+    def search_help() -> None:
+        print('Here are the fields you can search:')
+        for item in Command.__fields:
+            print(item)

@@ -13,3 +13,5 @@ if args.upload:
 elif args.search:
     if Command.is_field(args.search[0]):
         Command.search(search_client, f'{args.search[0]}:{args.search[1]}')
+elif args.search_help:
+    Command.search_help()
