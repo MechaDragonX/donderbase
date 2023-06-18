@@ -30,7 +30,7 @@ class Command:
         parser.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS, help='Show this help message and exit')
         parser.add_argument('-u','--upload', type=str, metavar=('<path>'), help='Upload a document to the Solr server')
         parser.add_argument('-s','--search', type=str, nargs=2, metavar=('<field>', '<value>'), help='Search for something in the Solr server')
-        parser.add_argument('-sh', '--search-help', action='store_true', help='List the fields that you can search')
+        parser.add_argument('-sh', '--search-help', action='store_true', help='List the fields you can search')
         
         args = parser.parse_args()
 
