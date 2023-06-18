@@ -1,19 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import argparse
 import json
 import sys
 from search import SearchClient
-
+from wrangler import Wrangler
 
 class Command:
-    __commands = {
-        'help': '',
-        'search':
-            'Usage: "search <field> <query>\nThe valid fields are "title", "subtitle", "artist", "source", "genre", and "game".\nMake sure to type these in lowercase!',
-        'exit': 'Exit the program'
-    }
-
     # Valid params to search
     # Example usage:
     # search source Persona 5
@@ -27,62 +21,40 @@ class Command:
     ]
 
 
-    def input_loop(search_client: SearchClient) -> None:
-        input_str = ''
-        params = []
-        query = None
-        while(True):
-            while(True):
-                input_str = input('> ')
-                params = input_str.split(' ')
-                if not Command.__is_command(params[0]):
-                    Command.__not_found(params[0])
-                else:
-                    break
-
-            match params[0]:
-                case 'help':
-                    print('UNIMPLEMENTED')
-                case 'search':
-                    query = Command.__handle_search(params)
-                    if query != None:
-                        Command.__search(search_client, query)
-                case 'exit':
-                    Command.__exit(params[0])
-            
-            print()
-
-
-    def __is_command(input: str) -> bool:
-        for key in Command.__commands:
-            if input == key:
-                return True
-
-
-    def __handle_search(params: list):
-        if len(params) == 1:
-            print('You have to specify what you want to search and what field to search!')
-            return None
-        if not (params[1] in Command.__search_params):
-            print('The field you specified does not exist!')
-            return None
+    def add_args():
+        parser = argparse.ArgumentParser(prog='Donderbase CLI' , 
+                                         description='Upload data for and search a "Taiko no Tatsujin" song database.',
+                                         usage='DonderbaseCLI [option] parameters...',
+                                         add_help=False)
         
-        return f'{params[1]}:{params[2]}'
+        parser.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS, help='Show this help message and exit')
+        parser.add_argument('-u','--upload', type=str, metavar=('<path>'), help='Upload a document to the Solr server')
+        parser.add_argument('-s','--search', type=str, nargs=2, metavar=('<field>', '<value>'), help='Search for something in the Solr server')
+        
+        args = parser.parse_args()
+
+        return args
 
 
-    def __search(search_client: SearchClient, input: str) -> list:
+    def upload(search_client: SearchClient, path: str) -> SearchClient:
+        print('Please wait while all the data is loaded into the database!')
+        search_client.add(Wrangler.donderful_wrangle(Wrangler.file_import(path)))
+        print('Import successfull!')
+        return search_client
+
+
+    def is_field(field: str):
+        if not (field in Command.__search_params):
+            print('The field you specified does not exist!')
+            return False
+        
+        return True
+
+
+    def search(search_client: SearchClient, input: str) -> list:
         result = search_client.search(input)
 
         if len(result) == 0:
             print('No results found!')
         else:
             print(json.dumps(result, indent=4))
-
-
-    def __exit() -> None:
-        print('Thanks for using Donderbase!')
-        sys.exit()
-
-    
-    def __not_found(input: str) -> None:
-        print(f'The command "{input}" was not found!\n')

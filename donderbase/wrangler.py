@@ -6,10 +6,9 @@ import re
 from song import Genre, Song
 
 class Wrangler:
-    def file_import(title: str) -> list:
-        filename = f'{__file__.removesuffix("donderbase/wrangler.py")}data/{title}.json'
+    def file_import(path: str) -> list:
         lines = []
-        with open(filename, 'r') as file:
+        with open(path, 'r') as file:
             lines = file.readlines()
         lines.pop(0)
         lines.pop()
